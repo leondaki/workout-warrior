@@ -14,10 +14,16 @@ function App() {
     {id: -1, name: "", sets: "", reps: "", weight: ""}
   );
 
+  const [isEditing, setIsEditing] = useState(false);
+
+  const toggleEditMode = () => {
+    console.log('entered edit mode!')
+    setIsEditing(!isEditing);
+  }
+
   const handleChange = (e) => {
     const {name, value} = e.target;
     setNewRowData({...newRowData, [name] : value});
-    console.log(newRowData)
   }
 
   const addRow = () => {
@@ -29,8 +35,14 @@ function App() {
       weight: newRowData.weight
     }
 
-    setExercises([...exercises, newRow]);
-    setNewRowData({id: -1, name: "", sets: "", reps: "", weight: ""});
+    const isRowFilled = (newRow) => {
+      return Object.values(newRow).every(item => item !== '');
+    }
+
+    if (isRowFilled(newRow)) {
+      setExercises([...exercises, newRow]);
+      setNewRowData({id: -1, name: "", sets: "", reps: "", weight: ""});
+    }
   }
 
   return (
@@ -44,7 +56,9 @@ function App() {
       exercises={ exercises } 
       addRow={ addRow } 
       onChange={ handleChange }
-      newRowData={ newRowData } />
+      newRowData={ newRowData } 
+      isEditing={ isEditing }
+      toggleEditMode={ toggleEditMode } />
     </>
   )
 }
