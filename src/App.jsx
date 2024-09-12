@@ -45,6 +45,11 @@ function App() {
     }
   }
 
+  const deleteRow = (index) => {
+      const newRows = [...exercises].filter((exercise) => exercise.id !== index);
+      setExercises(newRows);
+  }
+  
   return (
     <>
       <h1 class="text-blue-500 border py-10 my-10 text-4xl 
@@ -58,6 +63,7 @@ function App() {
       onChange={ handleChange }
       newRowData={ newRowData } 
       isEditing={ isEditing }
+      deleteRow={ deleteRow }
       toggleEditMode={ toggleEditMode } />
     </>
   )

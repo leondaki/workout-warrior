@@ -1,4 +1,4 @@
-function WorkoutRoutine({ exercises, addRow, onChange, newRowData, isEditing, toggleEditMode}) {
+function WorkoutRoutine({ exercises, addRow, onChange, newRowData, isEditing, toggleEditMode, deleteRow}) {
     return(
         <div class='shadow-md rounded-md mx-auto bg-white pb-8'>
             <h2 class='text-left p-8 font-bold text-3xl'>Daki's Workout</h2>
@@ -6,19 +6,24 @@ function WorkoutRoutine({ exercises, addRow, onChange, newRowData, isEditing, to
                 <table class="w-full border-collapse shadow-md bg-gray-100">
                     <thead>
                         <tr class=" text-white bg-blue-400 tracking-wider">
-                            <th class="font-thin p-4 text-sm uppercase w-36">Exercise Name</th>
-                            <th class="font-thin p-4 text-sm uppercase w-36">Sets</th>
-                            <th class="font-thin p-4 text-sm uppercase w-36">Reps</th>
-                            <th class="font-thin p-4 text-sm uppercase w-36">Weight</th>
+                            <th class="font-thin p-4 text-sm uppercase w-1/4">Exercise Name</th>
+                            <th class="font-thin p-4 text-sm uppercase w-1/4">Sets</th>
+                            <th class="font-thin p-4 text-sm uppercase w-1/4">Reps</th>
+                            <th class="font-thin p-4 text-sm uppercase w-1/4">Weight</th>
                         </tr>
                     </ thead>
                     <tbody>
                         {exercises.map((exercise) => (
                                 <tr key={exercise.id} class="even:bg-gray-200">
-                                    <td class="p-2">{exercise.name}</td>
+                                    <td class="p-2 text-left">{exercise.name}</td>
                                     <td class="p-2">{exercise.sets}</td>
                                     <td class="p-2">{exercise.reps}</td>
-                                    <td class="p-2">{exercise.weight}</td>
+                                    <td class="p-2 text-left">{exercise.weight}</td>
+                                    {isEditing && <td class="p-2 text-left bg-white">
+                                        <button 
+                                        class="border border-red-600 text-red-600 px-2 rounded-md
+                                        hover:bg-red-600 transition-all hover:text-white duration-300 ease-in-out"
+                                        onClick={() => deleteRow(exercise.id)}>X</button></td>}
                                 </tr>
                                 )
                             )
