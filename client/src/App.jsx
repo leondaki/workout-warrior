@@ -1,14 +1,17 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import './App.css'
 import WorkoutRoutine from './WorkoutRoutine'
 
 function App() {
-  const [exercises, setExercises] = useState([
-    {id: 1, name: "Bench Press", sets: 3, reps: 5, weight: 165},
-    {id: 2, name: "Dips", sets: 3, reps: 10, weight: "bodyweight"},
-    {id: 3, name: "Shoulder Press", sets: 4, reps: 8, weight: 35},
-    {id: 4, name: "Squats", sets: 3, reps: 12, weight: 45}
-  ]);
+
+  const [exercises, setExercises] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:3000/api/routine')  // URL of the API endpoint
+      .then(response => response.json())
+      .then(data => setExercises(data))  // Do something with the data
+      .catch(error => console.error('Error:', error));  // Handle errors
+  }, []);
 
   const [newRowData, setNewRowData] = useState(
     {id: -1, name: "", sets: "", reps: "", weight: ""}
