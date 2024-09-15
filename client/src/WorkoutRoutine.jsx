@@ -14,11 +14,11 @@ function WorkoutRoutine({ exercises, addRow, onChange, newRowData, isEditing, to
                     </ thead>
                     <tbody>
                         {exercises.map((exercise) => (
-                                <tr key={exercise.id} class="even:bg-gray-200">
-                                    <td class="p-2 text-left">{exercise.name}</td>
-                                    <td class="p-2">{exercise.sets}</td>
-                                    <td class="p-2">{exercise.reps}</td>
-                                    <td class="p-2 text-left">{exercise.weight}</td>
+                                <tr key={exercise.id} class="border border-b-black">
+                                    <td class="p-2 py-4 text-left font-bold">{exercise.name}</td>
+                                    <td class="p-2 py-4">{exercise.sets}</td>
+                                    <td class="p-2 py-4">{exercise.reps}</td>
+                                    <td class="p-2 py-4 text-left">{exercise.weight}</td>
                                     {isEditing && <td class="p-2 text-left bg-white">
                                         <button 
                                         class="border border-red-600 text-red-600 px-2 rounded-md
@@ -55,20 +55,22 @@ function WorkoutRoutine({ exercises, addRow, onChange, newRowData, isEditing, to
                 </table>
             </div>
 
-            {!isEditing && <button
-            class="border-2 border-blue-400 bg-blue-400 text-white p-2 px-4
-            hover:bg-white transition-all hover:text-blue-400 duration-300 ease-in-out"
-            onClick={() => toggleEditMode()}>Edit </button>}
+            <div class="p-8 text-center">
+                {!isEditing && <button
+                class="border-2 border-blue-400 bg-blue-400 text-white p-2 px-4 
+                hover:bg-white transition-all hover:text-blue-400 duration-300 ease-in-out"
+                onClick={() => toggleEditMode()}>Edit </button>}
 
-            {isEditing && <button
-            class="border-2 border-red-600 text-red-600 p-2 px-4
-            hover:bg-red-600 transition-all hover:text-white duration-300 ease-in-out"
-            onClick={() => toggleEditMode()}>Cancel</button>}
+                {isEditing && <button
+                class="border-2 border-red-600 text-red-600 p-2 px-4
+                hover:bg-red-600 transition-all hover:text-white duration-300 ease-in-out"
+                onClick={() => toggleEditMode()}>Cancel</button>}
 
-            {isEditing && <button
-            class="p-2 px-4 mx-4 border-2 border-green-500 hover:border-green-400 
-            text-white bg-green-500 hover:bg-green-400 transition-all duration-300 ease-in-out"
-            onClick={() => addRow()}>Add Exercise</button>}
+                {isEditing && <button
+                class="p-2 px-4 mx-4 border-2 border-green-500 hover:border-green-400 
+                text-white bg-green-500 hover:bg-green-400 transition-all duration-300 ease-in-out"
+                onClick={() => addRow()}>Add Exercise</button>}
+            </div>
 
         </ div>
   )

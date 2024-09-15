@@ -1,73 +1,18 @@
-import { useState, useEffect } from 'react'
-import './App.css'
-import WorkoutRoutine from './WorkoutRoutine'
+import { Outlet, Route, Routes } from "react-router-dom"
+import Home from './routes/Home'
+import Dashboard from './Dashboard'
+import Login from "./login"
 
 function App() {
-
-  const [exercises, setExercises] = useState([]);
-
-  useEffect(() => {
-    fetch('http://localhost:3000/api/routine')  // URL of the API endpoint
-      .then(response => response.json())
-      .then(data => setExercises(data))  // Do something with the data
-      .catch(error => console.error('Error:', error));  // Handle errors
-  }, []);
-
-  const [newRowData, setNewRowData] = useState(
-    {id: -1, name: "", sets: "", reps: "", weight: ""}
-  );
-
-  const [isEditing, setIsEditing] = useState(false);
-
-  const toggleEditMode = () => {
-    console.log('entered edit mode!')
-    setIsEditing(!isEditing);
-  }
-
-  const handleChange = (e) => {
-    const {name, value} = e.target;
-    setNewRowData({...newRowData, [name] : value});
-  }
-
-  const addRow = () => {
-    const newRow = {
-      id: exercises.length + 1, 
-      name: newRowData.name, 
-      sets: newRowData.sets,
-      reps: newRowData.reps,
-      weight: newRowData.weight
-    }
-
-    const isRowFilled = (newRow) => {
-      return Object.values(newRow).every(item => item !== '');
-    }
-
-    if (isRowFilled(newRow)) {
-      setExercises([...exercises, newRow]);
-      setNewRowData({id: -1, name: "", sets: "", reps: "", weight: ""});
-    }
-  }
-
-  const deleteRow = (index) => {
-      const newRows = [...exercises].filter((exercise) => exercise.id !== index);
-      setExercises(newRows);
-  }
-  
   return (
     <>
-      <h1 class="text-blue-500 border py-10 my-10 text-4xl 
-      border-blue-500 bg-white rounded-lg">
-        Welcome, Warrior <span class="text-red-400">Leonidas</span>!
-        </h1>
+    <div class="px-8 mt-4">
+      <h1 class="text-blue-500 border py-10 text-4xl 
+    border-blue-500 bg-white rounded-lg text-center">Workout Warrior App</h1>
+    </div>
+      
 
-      <WorkoutRoutine 
-      exercises={ exercises } 
-      addRow={ addRow } 
-      onChange={ handleChange }
-      newRowData={ newRowData } 
-      isEditing={ isEditing }
-      deleteRow={ deleteRow }
-      toggleEditMode={ toggleEditMode } />
+      <Outlet />
     </>
   )
 }

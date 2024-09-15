@@ -6,16 +6,6 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// const courses = [
-//     { id: 1, name: 'math'},
-//     { id: 2, name: 'biology'}, 
-//     { id: 3, name: 'cad drafting'},
-//     { id: 4, name: 'gym'},
-//     { id: 5, name: 'latin'},
-//     { id: 6, name: 'music'},
-//     { id: 7, name: 'physics'},
-//     { id: 8, name: 'history'},
-// ];
 
 const routine = [
     {id: 1, name: "Bench Press", sets: 3, reps: 5, weight: 165},
@@ -23,33 +13,49 @@ const routine = [
     {id: 3, name: "Shoulder Press", sets: 4, reps: 8, weight: 35},
     {id: 4, name: "Squats", sets: 3, reps: 12, weight: 45}
 ]
+  
+app.get('/', (req, res) => {
+    res.send(routine);
+});
 
+  
+app.get('/api/login', (req, res) => {
+    res.send('Login Page');
+});
+
+  
+app.get('/api/register', (req, res) => {
+    res.send('Register Page');
+});
+
+
+// GET
 app.get('/api/routine', (req, res) => {
     res.send(routine);
 });
 
-// app.get('/api/courses', (req, res) => {
-//     res.send(courses)
-// });
+// POST
+app.post('/api/routine', (req, res) => {
+    // const { error } = validateCourse(req.body)
+    // if (error) return res.status(400).send(error.details[0].message);
 
-// app.post('/api/courses', (req, res) => {
-//     const { error } = validateCourse(req.body)
-//     if (error) return res.status(400).send(error.details[0].message);
+    routine.push(req.body);
+    res.status(200).json({ message: 'Successfully added row! ', receivedData: req.body });
 
-//     const course = { 
-//         id: courses.length+1, 
-//         name: req.body.name
-//     };
-//     courses.push(course);
-//     res.send(course);
-// });
+    // courses.push(course);
+    // res.send(course);
+});
 
+// DELETE
+app.delete('/api/routine/:id', (req, res) => {
+    const item = routine.find(i => i.id === parseInt(req.params.id));
+    if (!item) return res.status(404).json({ message: 'EXERCISE NOT FOUND' });
 
-// app.get('/api/courses/:id', (req, res) => {
-//     const course = courses.find(c => c.id === parseInt(req.params.id));
-//     if (!course) res.status(404).send('Sorry, course not found!');
-//     res.send(course)
-// });
+    const index = routine.indexOf(item);
+    routine.splice(index, 1);
+    res.status(200).json({ message: `Successfully deleted row with ID ${req.params.id}` });
+});
+
 
 // app.put('/api/courses/:id',  (req, res) => {
 //     // Look up course
@@ -80,18 +86,6 @@ app.get('/api/routine', (req, res) => {
 //     return schema.validate(course)
 // }
 
-// app.delete('/api/courses/:id', (req, res) => {
-//     const course = courses.find(c => c.id === parseInt(req.params.id));
-//     if (!course) {
-//         res.status(404).send('Sorry, course not found - cannot delete');
-//         return;
-//     }
-
-//     const index = courses.indexOf(course);
-//     courses.splice(index, 1);
-
-//     res.send(courses);
-// });
 
 
 
